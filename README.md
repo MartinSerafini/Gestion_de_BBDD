@@ -1,4 +1,4 @@
-# Repositorio del Curso: Gestión de Base de Datos
+# Gestión de Base de Datos
 
 Este repositorio contiene los materiales, proyectos y ejercicios realizados durante el curso de **Gestión de Base de Datos** (2° cuatrimestre de 2025). Su propósito es servir como un registro organizado del progreso y los conocimientos adquiridos a lo largo de la cursada.
 

@@ -1,65 +1,56 @@
-### Ejercitacion de SQL
+### **Ejercitación de Consultas SQL sobre la Base de Datos `PUBS`** 📚
 
-Este repositorio contiene las soluciones para una serie de ejercicios de bases de datos, implementadas en SQL. Los ejercicios están diseñados para practicar y demostrar habilidades en el uso de consultas de SQL, abarcando desde selecciones básicas hasta uniones complejas y manipulación de datos.
+El objetivo de este repositorio es demostrar las técnicas fundamentales de consulta y manipulación de datos en una base de datos relacional, tomando como referencia el esquema de la base de datos `PUBS`.
 
-Los ejercicios se basan en la base de datos `PUBS`, que es ideal para practicar conceptos fundamentales de bases de datos. Las soluciones están organizadas en diferentes archivos para que sea fácil seguir cada categoría de ejercicios.
-
----
-
-### Estructura del Repositorio
-
-El repositorio está organizado por categorías de ejercicios, cada una con su propio archivo SQL. Puedes encontrar las siguientes secciones:
-
-#### Consultas Simples 
-Esta sección cubre las consultas más básicas, como la selección de datos, la visualización de la estructura de las tablas, el uso de alias para las columnas y la concatenación de campos para crear un nuevo valor.
-* Listar todos los autores y editoriales.
-* Mostrar la estructura de tablas como `STORES` y `SALES`.
-* Concatenar nombres de empleados y mostrar sus fechas de contratación.
-* Calcular el precio de los libros con y sin IVA, usando alias para las columnas.
-* Listar países y ciudades únicos de editoriales y autores, evitando repeticiones.
+Las consultas están organizadas por el concepto central de SQL que abordan.
 
 ---
 
-#### Consultas Condicionales 
-Aquí se aplican filtros a las consultas usando la cláusula `WHERE`. Esto permite seleccionar datos que cumplen con condiciones específicas.
-* Filtrar empleados por editorial, nivel de trabajo y fecha de contratación.
-* Encontrar autores sin contrato que residen en California.
-* Filtrar ventas por condiciones de pago y cantidad sin usar `BETWEEN`.
-* Buscar editoriales con un estado de residencia nulo.
-* Utilizar `LIKE` y comodines (`%`, `_`) para encontrar datos que coinciden con patrones de texto.
-* Filtrar facturas por condiciones de pago y rangos de años.
+### **Estructura y Enfoque de la Ejercitación**
+
+#### **1. Consultas Simples** 🎯
+
+**Sentido:** Adquirir dominio sobre la sintaxis básica de la sentencia **`SELECT`** y la presentación de resultados.
+* **Selección de Datos:** Uso de `SELECT *` y `SELECT columna1, columna2` para mostrar todos o un subconjunto de datos.
+* **Formato y Alias:** Utilización de **Alias** (`AS`) para renombrar columnas y manipulación de cadenas con **Concatenación** (`CONCAT`) para generar campos descriptivos (ej. Nombre Completo).
+* **Cálculos Directos:** Realizar operaciones aritméticas en línea, como calcular el precio con IVA.
+* **Valores Únicos:** Uso de **`DISTINCT`** para listar elementos sin repeticiones (ej. países o ciudades únicas).
 
 ---
 
-#### Consultas Agrupadas 
-Esta sección se centra en el uso de `GROUP BY` y funciones de agregación como `COUNT`, `AVG`, `MIN` y `MAX` para resumir datos y obtener información sobre grupos.
-* Contar autores por estado, editoriales por país, y empleados en la compañía.
-* Calcular el precio promedio de los libros por categoría, con o sin categorías nulas.
-* Encontrar tiendas que han vendido más de 100 libros.
-* Usar la cláusula `HAVING` para filtrar los resultados de las agrupaciones.
+#### **2. Consultas Condicionales (Filtros)** 🔍
+
+**Sentido:** Aplicar la cláusula **`WHERE`** para seleccionar solo aquellos registros que satisfacen criterios específicos, y ordenar los resultados.
+* **Condiciones Lógicas:** Uso de `AND`, `OR` y negación (`NOT`) para combinar múltiples filtros.
+* **Filtrado de Rangos:** Seleccionar datos que caen dentro de un rango numérico o de fecha, con y sin el operador `BETWEEN`.
+* **Ausencia de Datos:** Uso de **`IS NULL`** para identificar registros con valores faltantes.
+* **Búsqueda de Patrones:** Empleo de **`LIKE`** y comodines (`%`, `_`) para buscar texto que coincide con un formato específico (ej. nombres que empiezan con 'P' o direcciones que terminan en un número).
+* **Ordenamiento:** Utilización de **`ORDER BY`** en modo ascendente (`ASC`) y descendente (`DESC`).
 
 ---
 
-#### Consultas Relacionadas 
-Aquí se utilizan `JOIN` para combinar datos de múltiples tablas, lo cual es esencial para obtener información completa de la base de datos.
-* Combinar tablas de libros y editoriales para ver sus detalles juntos.
-* Encontrar autores y tiendas que están en el mismo estado.
-* Listar editoriales que no han publicado ningún libro.
-* Identificar libros que nunca se han vendido.
-* Realizar un producto cartesiano (`CROSS JOIN`) entre libros de negocios y tiendas en California.
-* Listar todas las ciudades únicas en la base de datos.
+#### **3. Consultas Agrupadas y Agregación** 📈
+
+**Sentido:** Utilizar funciones de agregación para resumir, contar y analizar datos, y la cláusula **`GROUP BY`** para aplicar estas agregaciones a subconjuntos de datos.
+* **Agregaciones:** Uso de `COUNT`, `AVG`, `MIN` y `MAX` para obtener estadísticas.
+* **Agrupamiento:** Calcular promedios, máximos o conteos para cada categoría distinta (ej. precio promedio por tipo de libro).
+* **Filtrado de Grupos:** Aplicación de la cláusula **`HAVING`** para filtrar los resultados después de haber sido agrupados (ej. locales con ventas mayores a una cantidad específica).
 
 ---
 
-#### Ejercicios de DDL y DML 
-Esta sección contiene sentencias para la **Manipulación de Datos (DML)**, como `INSERT`, `UPDATE` y `DELETE`, que son cruciales para modificar y gestionar los datos en las tablas.
-* Insertar nuevos registros de clientes usando las sintaxis `INSERT` simplificada y extendida.
-* Actualizar la información de clientes, como su nombre, apellido y CUIT.
-* Eliminar clientes basados en su apellido o CUIT.
-* Modificar precios de artículos aplicando porcentajes de aumento o disminución.
-* Borrar artículos con stock igual a cero.
+#### **4. Consultas Relacionadas (JOINs y Uniones)** 🔗
+
+**Sentido:** Combinar datos de dos o más tablas de la base de datos para obtener información completa y analizar las relaciones.
+* **Uniones Internas (`INNER JOIN`):** Mostrar registros que tienen coincidencias en ambas tablas (ej. libros junto a su editorial).
+* **Uniones Externas (`LEFT JOIN`):** Identificar registros que no tienen coincidencias en la tabla secundaria (ej. editoriales que no han publicado libros, o libros que nunca han sido vendidos).
+* **Producto Cartesiano (`CROSS JOIN`):** Obtener todas las combinaciones posibles entre dos conjuntos de datos.
+* **Operadores de Conjunto (`UNION`):** Combinar los resultados de consultas separadas en una sola lista, eliminando duplicados (ej. listar todas las ciudades mencionadas en la base de datos).
 
 ---
 
-#### Uso de este Repositorio
-Para utilizar este repositorio, simplemente clona el proyecto y ejecuta los archivos `.sql` en un cliente de base de datos conectado a tu instancia de la base de datos `PUBS`. Los archivos están nombrados según el número del ejercicio para facilitar su uso.
+#### **5. Ejercicios de DML (Manipulación de Datos)** 💾
+
+**Sentido:** Practicar sentencias para modificar el contenido de las tablas, crucial para la gestión de datos.
+* **Inserción (`INSERT`):** Añadir nuevos registros, utilizando las sintaxis simplificada y extendida.
+* **Actualización (`UPDATE`):** Modificar datos existentes, incluyendo la aplicación de cálculos porcentuales a los precios basados en rangos.
+* **Eliminación (`DELETE`):** Borrar registros de las tablas basándose en condiciones específicas.

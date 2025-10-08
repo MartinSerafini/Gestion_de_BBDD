@@ -34,12 +34,8 @@ Los ejemplos están agrupados en tres grandes categorías, siguiendo la lógica 
 
 Se enfocan en la selección básica de datos, el uso de alias (`AS`), funciones de concatenación (`CONCAT`), cálculos sencillos y la eliminación de valores repetidos (`DISTINCT`).
 
-### 2. Consultas Condicionadas (Ejercicios 11 - 20)
-Implican el uso de cláusulas WHERE con operadores lógicos (`AND`, `OR`, `NOT`), operadores de comparación (`BETWEEN`, `IN`), patrones de búsqueda (`LIKE`, `REGEXP`), y ordenamiento de resultados (ORDER BY).
+### 2. Vistas con Condición WHERE (Ejercicios 11 - 15)
+Estas vistas extienden las vistas agrupadas introduciendo filtros permanentes (WHERE) sobre la consulta base, limitando el conjunto de datos que expone la vista. Los filtros se aplican a la cantidad vendida, el rango de años de la venta, el ID de la tienda o el ID del autor.
 
-### 3. Consultas Agrupadas y Relacionadas (Ejercicios 21 - 40)
-Esta sección cubre las consultas más avanzadas:
-
-Agrupadas (`GROUP BY`, `HAVING`): Cálculo de promedios, máximos, mínimos y conteos por categoría.
-
-Relacionadas (`JOIN`, `UNION`): Combinación de información de dos o más tablas, incluyendo INNER JOIN, LEFT JOIN y Producto Cartesiano.
+### 3. Vistas Actualizables (Ejercicios 16 - 20)
+Esta sección crea vistas simples (basadas en una sola tabla y sin agregaciones) cuyo propósito es permitir la modificación de los datos de la tabla subyacente (titles, authors, sales) a través de la vista.

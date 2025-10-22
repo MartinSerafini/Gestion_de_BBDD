@@ -6,7 +6,7 @@ El objetivo de los ejercicios es comprender el impacto y las implicaciones de lo
 
 ---
 
-## 🎯 Conceptos Centrales Abordados
+## Conceptos Centrales Abordados
 
 El ejercicio se centra en las sentencias **Data Definition Language (DDL)**, específicamente aquellas que controlan la optimización del acceso a datos.
 
@@ -33,7 +33,7 @@ El ejercicio se centra en las sentencias **Data Definition Language (DDL)**, esp
 
 ---
 
-## 🛠️ Instrucciones de Uso
+## Instrucciones de Uso
 
 Para replicar y ejecutar estos ejercicios, siga los siguientes pasos:
 

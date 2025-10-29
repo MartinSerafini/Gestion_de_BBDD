@@ -1,66 +1,74 @@
-# Procedimientos Almacenados en MySQL/MariaDB (Práctica Técnica)
+# Procedimientos Almacenados en MySQL/MariaDB (Trabajo Práctico)
 
-Este repositorio documenta una colección de procedimientos almacenados desarrollados en un entorno MySQL/MariaDB. El proyecto tiene como objetivo ilustrar el manejo avanzado de la lógica de programación dentro del motor de base de datos, incluyendo la gestión de diferentes tipos de parámetros (`IN`, `OUT`, `INOUT`), estructuras de control condicionales (`IF`, `CASE`) y bucles iterativos (`WHILE`, `REPEAT`, `LOOP`).
+Este repositorio contiene la resolución de un Trabajo Práctico enfocado en el desarrollo y la implementación de **Procedimientos Almacenados (Stored Procedures)** en el entorno MySQL/MariaDB. El objetivo principal es demostrar el dominio en la gestión de **parámetros**, el control de **flujo de ejecución** y la manipulación de datos (**DML**) directamente desde el motor de la base de datos.
 
-## Estructura de la Base de Datos
-
-Los ejemplos se dividen en dos esquemas de datos principales:
-
-### 1. Sistema de Ventas (Ejercicios 1, 2, 3, 4)
-
-Diseñado para simular un sistema de ventas, permitiendo la gestión de inventario, clientes y transacciones.
-
-| Tabla | Descripción | Columnas Clave |
-| :--- | :--- | :--- |
-| `clientes` | Datos maestros de los clientes. | `id` (PK) |
-| `productos` | Catálogo de productos, precio y stock. | `id` (PK) |
-| `ventas` | Registros de transacciones, con cantidad y fecha. | `id` (PK), `cliente_id` (FK), `producto_id` (FK) |
-
-### 2. Gestión de Empleados y Temas Lógicos (Ejemplos de Control de Flujo)
-
-Utilizado para demostrar el uso de parámetros y estructuras de control.
-
-| Tabla | Descripción |
-| :--- | :--- |
-| `empleados` | Documentos, nombres, apellidos, sueldo y sección. |
-| `provincias` | Nombres y códigos de provincias. |
+La base de datos de referencia es un esquema simple de **Sistema de Ventas**.
 
 ---
 
-## Procedimientos Almacenados por Funcionalidad
+### 1. Gestión de Parámetros (`IN`, `OUT`, `INOUT`) 
 
-Los procedimientos almacenados se agrupan por el concepto técnico que ilustran:
+**Sentido:** Adquirir dominio sobre la sintaxis de definición de procedimientos y la comunicación de datos entre el programa cliente y la base de datos.
 
-### I. Tipos de Parámetros
+* **Parámetros de Salida (`OUT`):**
+    * `pa_ventas_total_producto`: Calcula y retorna el **monto total** de ventas, la **cantidad de unidades** vendidas y el **nombre del producto** para un ID dado. (Uso de `SELECT ... INTO` con múltiples variables de salida).
+* **Parámetros de Entrada/Salida (`INOUT`):**
+    * `pa_actualizar_stock`: Recibe la cantidad a vender. **Disminuye el stock** en la tabla y **retorna el nuevo stock** en el mismo parámetro, utilizando `-1` como **código de estado** si la venta no se pudo realizar por falta de existencias.
 
-| Procedimiento | Tipo de Parámetro | Descripción | Concepto Clave |
-| :--- | :--- | :--- | :--- |
-| `pa_ventas_total_producto` | `IN`, `OUT` | Retorna el **monto total** y la **cantidad total de unidades** vendidas de un producto por su ID. | Asignación múltiple con `SELECT ... INTO`. |
-| `pa_actualizar_stock` | `IN`, `INOUT` | Disminuye el stock. El parámetro `INOUT` recibe la cantidad a vender y retorna el **nuevo stock**, o **-1** si el stock es insuficiente. | Control de errores explícito (uso de `-1`). |
-| `pa_cantidad_hijos` | `IN`, `INOUT` | Recibe un documento y un valor inicial; retorna la suma de la **cantidad de hijos** del empleado más el valor inicial. | Utilización de un valor inicial para acumulación. |
-| `pa_empleados_sueldo` | `IN` | Lista empleados con sueldo **superior o igual** al valor de entrada. | Filtrado simple en la cláusula `WHERE`. |
-| `pa_seccion` | `IN`, `OUT` | Retorna el **promedio** y el **sueldo máximo** para una sección dada. | Cálculos agregados (`AVG`, `MAX`). |
+---
 
-### II. Estructuras Condicionales (`IF` y `CASE`)
+### 2. Control de Flujo Condicional (Lógica de Negocio) 
 
-| Procedimiento | Estructura | Descripción | Concepto Clave |
-| :--- | :--- | :--- | :--- |
-| `pa_mayor3` | `IF...ELSEIF...ELSE` | Muestra el mayor de **tres** enteros de entrada. | Uso de operadores lógicos (`AND`) en condiciones. |
-| `pa_mas_clientes_provincias` | `IF...ELSEIF...ELSE` | Compara el número de clientes entre dos provincias dadas y retorna la provincia con más clientes. | Variables locales (`DECLARE`) y `JOIN`s dentro del procedimiento. |
-| `pa_tipo_medalla` | `CASE puesto WHEN 1 THEN...` | Retorna el tipo de medalla (`oro`, `plata`, `bronce`) basado en un número de puesto de entrada (1, 2 o 3). | `CASE` simple con comparación de valores exactos. |
-| `pa_cantidad_digitos` | `CASE WHEN condicion THEN...` | Retorna la cantidad de dígitos (1 a 3) de un número de entrada (1 a 999). | `CASE` basado en condiciones lógicas (rangos). |
+**Sentido:** Implementar lógica de negocio y validaciones utilizando estructuras de control dentro del procedimiento.
 
-### III. Estructuras Iterativas (Bucles)
+* **Condición Lógica (`IF/ELSE`):**
+    * Utilizado en `pa_actualizar_stock` para validar si el `stock` actual es **suficiente** antes de ejecutar la sentencia `UPDATE` de manipulación de datos.
+    * Utilizado en `pa_promedio_precio_cliente` para **prevenir la división por cero** antes de calcular el promedio, verificando que la cantidad total de unidades vendidas sea mayor a cero.
 
-Se emplean bucles para demostrar la ejecución repetitiva de código hasta que se cumple una condición de salida. Los siguientes procedimientos retornan dos valores aleatorios distintos entre 0 y 10:
+---
 
-| Procedimiento | Tipo de Bucle | Sintaxis y Lógica de Salida |
-| :--- | :--- | :--- |
-| `pa_generar_dos_aleatorios` (1) | `WHILE` | Se repite **mientras** la condición (`valor1 = valor2`) sea verdadera. |
-| `pa_generar_dos_aleatorios` (2) | `REPEAT` | Se repite **hasta** que la condición (`valor1 <> valor2`) sea verdadera. |
-| `pa_generar_dos_aleatorios` (3) | `LOOP` | Bucle infinito que requiere la sentencia `LEAVE [etiqueta]` para su finalización controlada. |
+### 3. Cálculos y Agregación con Variables Locales 
 
-## Implementación Detallada (Ejemplo Destacado: `INOUT` y Lógica de Negocio)
+**Sentido:** Utilizar variables locales para almacenar resultados intermedios de cálculos complejos, optimizando la legibilidad y el mantenimiento del código.
 
-El procedimiento `pa_actualizar_stock` es un ejemplo crucial de cómo los procedimientos almacenados manejan la lógica de negocio y comunican el estado de las operaciones:
+* **Cálculo de Métricas:**
+    * `pa_promedio_precio_cliente`: Calcula el **Precio Promedio Ponderado** de compra por cliente.
+    * Se utilizan variables locales (`DECLARE`) para almacenar el **monto total de compras** (numerador) y la **cantidad total de unidades** (denominador) antes de realizar la operación final de división.
+    * $$\text{PPP} = \frac{\sum (\text{Cantidad} \times \text{Precio})}{\sum (\text{Cantidad})}$$
 
+---
+
+### 4. Consultas de Retorno y Formato (JOINs y Funciones) 
+
+**Sentido:** Combinar datos de múltiples tablas para generar conjuntos de resultados útiles y aplicar formato.
+
+* **Uniones Internas (`INNER JOIN`):**
+    * `pa_ventas_cliente_rango`: Combina datos de `ventas`, `clientes` y `productos` para obtener una visión detallada de las transacciones.
+* **Filtrado de Rangos:**
+    * Se utiliza la cláusula `WHERE` con `BETWEEN` para listar las ventas que caen dentro de un **rango de fechas** específico (`p_fecha_inicio` y `p_fecha_fin`).
+* **Función de Formato:**
+    * Integración de una **función escalar personalizada** (`fecha_arg`) para modificar el formato de las fechas de salida de `AAAA-MM-DD` al estándar **`DD-MM-AAAA`**.
+
+---
+
+### 5. Sentencias DML Encapsuladas (Manipulación de Datos) 
+
+**Sentido:** Practicar la inserción, actualización o eliminación de datos de manera controlada y segura a través de procedimientos, evitando la ejecución directa de comandos DML por parte del cliente.
+
+* **Actualización (`UPDATE`):**
+    * `pa_actualizar_stock`: La sentencia `UPDATE productos SET stock = stock - p_cantidad_vendida` se encapsula dentro de una validación `IF` para asegurar la **integridad referencial** y la **coherencia del inventario**.
+
+---
+
+##  Cómo Ejecutar
+
+1.  **Configuración:** Ejecute el archivo `TP_Procedimientos_Almacenados.sql` para crear la base de datos `tp_procedimientos`, las tablas y los datos de prueba.
+2.  **Funciones:** Asegúrese de crear la función auxiliar `fecha_arg` si desea ver el formato de fecha modificado en las salidas.
+3.  **Llamada:** Utilice el comando `CALL` en su cliente SQL, declarando las variables de sesión (`@nombre`) para capturar los valores de los parámetros `OUT` o `INOUT`.
+
+```sql
+-- Ejemplo de llamada a un procedimiento con OUT:
+CALL pa_ventas_total_producto(1, @nombre_prod, @total_monto, @total_cant);
+
+-- Verificación de resultados:
+SELECT @nombre_prod AS Producto, @total_monto AS MontoTotal, @total_cant AS Unidades;

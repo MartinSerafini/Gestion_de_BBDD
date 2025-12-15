@@ -1,0 +1,117 @@
+// ============================
+// MongoDB - Ejemplos de Uso
+//============================ 
+
+// Activo base "local" y muestro colecciones
+use local
+show collections
+
+// Activo base "test" y muestro colecciones
+use test
+show collections
+
+// Activo la base "baseEjemplo2"
+use baseEjemplo2
+
+//Muestro las colecciones existentes en "baseEjemplo2" 
+show collections
+
+// Creo colección usuarios e inserto dos documentos 
+db.usuarios.insertMany([
+    { nombre: "Juan Pérez", clave: "jp123" },
+    { nombre: "Ana Gómez", clave: "ag789" }
+])
+
+// Muestro colecciones existentes en "baseEjemplo2"
+show collections
+
+// ============================
+// Base "pubs"
+// ============================
+
+// Inserto documentos con _id distintos en la colección clientes
+use pubs
+db.clientes.drop()
+db.clientes.insertMany([
+    { _id: 1, nombre: "Carlos Perez", email: "cperez@gmail.com" },
+    { _id: 2, nombre: "Teresa Rodriguez", email: "rodriguez@otmail.com" }
+])
+db.clientes.find()
+
+// Intento ingresar otro documento con _id repetido
+db.clientes.insertOne({ _id: 1, nombre: "Laura Repetido", email: "lrep@yahoo.com" })
+// Me devuelve un error de clave duplicada error: E11000 duplicate key error collection: pubs.clientes index: _id_ dup key: { _id: 1 }
+
+use pubs
+
+// Genero una colección libros e inserto varios documentos
+db.libros.drop()
+db.libros.insertMany([
+    {
+        id_libro: 1,
+        nombre_libro: "Cien años de soledad",
+        editorial: "Sudamericana",
+        autor: "Gabriel García Márquez",
+        anio_publicacion: 1967
+    },
+    {
+        id_libro: 2,
+        nombre_libro: "El túnel",
+        editorial: "Losada",
+        autor: "Ernesto Sabato",
+        anio_publicacion: 1948
+    },
+    {
+        id_libro: 3,
+        nombre_libro: "Rayuela",
+        editorial: "Sudamericana",
+        autor: "Julio Cortázar",
+        anio_publicacion: 1963
+    },
+    {
+        id_libro: 4,
+        nombre_libro: "El principito",
+        editorial: "Reynal & Hitchcock",
+        autor: "Antoine de Saint-Exupéry",
+        anio_publicacion: 1943
+    },
+    {
+        id_libro: 5,
+        nombre_libro: "1984",
+        editorial: "Secker & Warburg",
+        autor: "George Orwell",
+        anio_publicacion: 1949
+    },
+])
+
+// Muestro todos los documentos de la colección libros
+db.libros.find()
+
+// ============================
+// Base blog
+// ============================
+
+// Creo una base de datos llamada blog
+use blog
+
+// Creo una colección posts e insertar un documento */
+db.posts.drop()
+db.posts.insertOne({
+    titulo: "Primer artículo",
+    autor: "Admin",
+    contenido: "Esto es un post de ejemplo.",
+    fecha: new Date(),
+    tags: ["general", "blog"]
+})
+db.posts.find()
+
+// Listo todas las bases de datos actuales
+show dbs
+
+// Elimino la colección posts
+db.posts.drop()
+
+// Elimino la base de datos blog y mostrar bases existentes
+use blog
+db.dropDatabase()
+show dbs
